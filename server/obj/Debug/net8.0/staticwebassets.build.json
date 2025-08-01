@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "RXFdUEbQQFBQ5rkfww6XHhR6v1IJ0s04402qPXKRrYw=",
+  "Source": "MigratedJobPortalAPI",
+  "BasePath": "_content/MigratedJobPortalAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

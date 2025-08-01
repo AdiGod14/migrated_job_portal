@@ -1,0 +1,136 @@
+<!-- ALERT AND CONFIRM COMPONENTS (Positioning still custom due to lack of exact Bootstrap overlay) -->
+<app-alert [message]="alertMessage" [type]="alertType" [show]="showAlert" (closed)="onAlertClosed()"></app-alert>
+
+<app-confirm [show]="showConfirm" [message]="confirmMessage" (confirmed)="onConfirmApply()"
+  (cancelled)="onCancelConfirm()"></app-confirm>
+
+<!-- SEARCH CONTAINER -->
+<div class="container my-4 p-4 bg-light rounded shadow-sm">
+
+  <!-- Search input -->
+  <div class="mb-3">
+    <input type="search" class="form-control" [(ngModel)]="searchTerm" (input)="searchJobs()"
+      placeholder="Search jobs..." />
+  </div>
+
+  <!-- Filters -->
+  <div class="row g-3">
+    <div class="col-md-4">
+      <label class="form-label">Type:</label>
+      <select class="form-select" [(ngModel)]="filters.type" (change)="searchJobs()">
+        <option value="">All</option>
+        <option value="Full-Time">Full-Time</option>
+        <option value="Part-Time">Part-Time</option>
+        <option value="Internship">Internship</option>
+        <option value="Remote">Remote</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Experience (in Years):</label>
+      <input type="number" class="form-control" [(ngModel)]="filters.experience" (input)="searchJobs()"
+        placeholder="Years" />
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Expected Salary (in LPA):</label>
+      <input type="number" class="form-control" [(ngModel)]="filters.expectedSalary" (input)="searchJobs()" />
+    </div>
+  </div>
+
+  <!-- Warning message -->
+  <div *ngIf="showDomainWarning && !loadingJobs" class="alert alert-warning mt-3">
+    <p class="mb-0">
+      Please <strong>set your preferred domain</strong> in your profile, or
+      <strong>use the search box or filters</strong> to find relevant jobs.
+    </p>
+  </div>
+
+  <!-- Loading spinner -->
+  <div *ngIf="loadingJobs" class="d-flex align-items-center justify-content-center gap-3 mt-4">
+    <div class="spinner-border text-secondary" role="status"></div>
+    <div><strong>Loading jobs, please wait...</strong></div>
+  </div>
+
+  <!-- Job cards -->
+  <div class="row mt-4">
+    <div class="col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let job of filteredJobs">
+      <div class="card h-100 shadow-sm job-card" (click)="openJobModal(job)">
+        <div class="card-body">
+          <h5 class="card-title text-primary">{{ job.title }}</h5>
+          <p class="card-text"><strong>{{ job.company }}</strong></p>
+          <p class="card-text text-muted">{{ job.type }} | {{ job.location }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade show" *ngIf="showModal"></div>
+
+<!-- MODAL -->
+<div class="modal d-block" tabindex="-1" *ngIf="showModal">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><strong>{{ selectedJob.title }}</strong></h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Company:</strong> {{ selectedJob.company }}</p>
+        <p><strong>Employer Name:</strong> {{ selectedJob.employerName }}</p>
+        <p><strong>Location:</strong> {{ selectedJob.location }}</p>
+        <p><strong>Type:</strong> {{ selectedJob.type }}</p>
+        <p><strong>Salary:</strong> ₹{{ selectedJob.salary }} LPA</p>
+        <p><strong>Experience Required:</strong> {{ selectedJob.experience }} Years</p>
+        <p><strong>Vacancies:</strong> {{ selectedJob.vacancies }}</p>
+        <p><strong>Status:</strong> {{ selectedJob.status }}</p>
+
+        <div *ngIf="selectedJob.description">
+          <p><strong>Overview:</strong></p>
+          <p>{{ selectedJob.description.overview }}</p>
+
+          <p><strong>Responsibilities:</strong></p>
+          <ul>
+            <li *ngFor="let item of selectedJob.description.responsibilities">{{ item }}</li>
+          </ul>
+
+          <p><strong>Required Skills:</strong></p>
+          <ul>
+            <li *ngFor="let skill of selectedJob.description.requiredSkills">{{ skill }}</li>
+          </ul>
+
+          <ng-container *ngIf="selectedJob.description.preferredSkills?.length">
+            <p><strong>Preferred Skills:</strong></p>
+            <ul>
+              <li *ngFor="let skill of selectedJob.description.preferredSkills">{{ skill }}</li>
+            </ul>
+          </ng-container>
+
+          <ng-container *ngIf="selectedJob.description.whatWeOffer?.length">
+            <p><strong>What We Offer:</strong></p>
+            <ul>
+              <li *ngFor="let benefit of selectedJob.description.whatWeOffer">{{ benefit }}</li>
+            </ul>
+          </ng-container>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" [disabled]="isApplying" (click)="applyToJob(selectedJob)">Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pagination Controls (outside modal, after job cards) -->
+<div class="d-flex justify-content-center align-items-center my-3" *ngIf="pagination.totalPages > 1 && !loadingJobs">
+  <button class="btn btn-outline-secondary me-2" [disabled]="pagination.page === 1" (click)="changePage(pagination.page - 1)">
+    Previous
+  </button>
+  <span class="mx-2">Page {{ pagination.page }} of {{ pagination.totalPages }}</span>
+  <button class="btn btn-outline-secondary ms-2" [disabled]="pagination.page === pagination.totalPages" (click)="changePage(pagination.page + 1)">
+    Next
+  </button>
+</div>
+<!-- </div> -->
