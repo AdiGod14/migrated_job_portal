@@ -111,3 +111,4 @@ C:\Users\adity\OneDrive\Desktop\migrated_job_portal\server\obj\Debug\net8.0\refi
 C:\Users\adity\OneDrive\Desktop\migrated_job_portal\server\obj\Debug\net8.0\MigratedJobPortalAPI.pdb
 C:\Users\adity\OneDrive\Desktop\migrated_job_portal\server\obj\Debug\net8.0\MigratedJobPortalAPI.genruntimeconfig.cache
 C:\Users\adity\OneDrive\Desktop\migrated_job_portal\server\obj\Debug\net8.0\ref\MigratedJobPortalAPI.dll
+C:\Users\adity\OneDrive\Desktop\migrated_job_portal\server\obj\Debug\net8.0\MigratedJobPortalAPI.sourcelink.json

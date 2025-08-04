@@ -8,11 +8,9 @@ import { environment } from '../environments/environment';
 })
 export class UserService {
   constructor(private http: HttpClient) {}
-  private testapiUrl = 'http://localhost:5086/api';
-
   getUserData(userId: string): Observable<any> {
     // return this.http.get(`${environment.apiUrl}/getUserData/${userId}`);
-    return this.http.get(`${this.testapiUrl}/UsersAndEmployers/getUser/${userId}`);
+    return this.http.get(`${environment.apiUrl}/UsersAndEmployers/getUser/${userId}`);
 
   }
   
@@ -22,14 +20,14 @@ export class UserService {
     // return this.http.put(`${environment.apiUrl}/updateUser/${userId}`, data, {
     //   headers,
     // });
-    return this.http.patch(`${this.testapiUrl}/UsersAndEmployers/updateUser/${userId}`, data, {
+    return this.http.patch(`${environment.apiUrl}/UsersAndEmployers/updateUser/${userId}`, data, {
       headers
     });
   }
 
   deleteUser(userId: string, token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.delete(`${this.testapiUrl}/UsersAndEmployers/deleteUser/${userId}`, {
+    return this.http.delete(`${environment.apiUrl}/UsersAndEmployers/deleteUser/${userId}`, {
       headers,
     });
   }
@@ -41,7 +39,7 @@ export class UserService {
     //   }
     // );
         return this.http.get<any>(
-      `${this.testapiUrl}/Analytics/user/status/${userId}`,
+      `${environment.apiUrl}/Analytics/user/status/${userId}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -56,7 +54,7 @@ export class UserService {
     //   }
     // );
     return this.http.get<any[]>(
-      `${this.testapiUrl}/Analytics/user/domain/${userId}`,
+      `${environment.apiUrl}/Analytics/user/domain/${userId}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }

@@ -8,8 +8,6 @@ import { Observable } from 'rxjs';
 })
 export class EmployerService {
   constructor(private http: HttpClient) {}
-  private testapiUrl = 'http://localhost:5086/api';
-
 
   getEmployerData(employerId: string, token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -19,7 +17,7 @@ export class EmployerService {
     // );
 
       return this.http.get<any>(
-      `${this.testapiUrl}/UsersAndEmployers/getEmployer/${employerId}`,
+      `${environment.apiUrl}/UsersAndEmployers/getEmployer/${employerId}`,
       { headers }
     );
   }
@@ -36,7 +34,7 @@ export class EmployerService {
     //   { headers }
     // );
         return this.http.patch(
-      `${this.testapiUrl}/UsersAndEmployers/updateEmployer/${employerId}`,
+      `${environment.apiUrl}/UsersAndEmployers/updateEmployer/${employerId}`,
       data,
       { headers }
     );
@@ -49,13 +47,13 @@ export class EmployerService {
     //   { headers }
     // );
         return this.http.delete(
-      `${this.testapiUrl}/deleteEmployer/${employerId}`,
+      `${environment.apiUrl}/deleteEmployer/${employerId}`,
       { headers }
     );
   }
 
     getApplicationStatusSummary(employerId: string, token: string) {
-        return this.http.get<any>(`${this.testapiUrl}/Analytics/employer/status/${employerId}`, {
+        return this.http.get<any>(`${environment.apiUrl}/Analytics/employer/status/${employerId}`, {
         headers: { Authorization: `Bearer ${token}` }
   });
 }

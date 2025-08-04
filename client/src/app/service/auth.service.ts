@@ -16,7 +16,6 @@ interface LoginResponse {
 })
 export class AuthService {
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private http: HttpClient) { }
-    private testapiUrl = 'http://localhost:5086/api';
   getToken(): string | null {
     if (!isPlatformBrowser(this.platformId)) {
       return null; // no localStorage on server
@@ -62,7 +61,7 @@ export class AuthService {
     //     }
     //   })
     // );
-    return this.http.post<LoginResponse>(`${this.testapiUrl}/Login/login`, data).pipe(
+    return this.http.post<LoginResponse>(`${environment.apiUrl}/Login/login`, data).pipe(
       tap((response: LoginResponse) => {
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', response.token);
@@ -89,7 +88,7 @@ export class AuthService {
     //     })
     //   );
         return this.http
-      .post<{ accessToken: string }>(`${this.testapiUrl}/Login/refresh`, { refreshToken })
+      .post<{ accessToken: string }>(`${environment.apiUrl}/Login/refresh`, { refreshToken })
       .pipe(
         map((response) => {
           console.log("✅ New access token received from server:", response.accessToken);

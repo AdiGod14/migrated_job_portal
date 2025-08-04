@@ -110,14 +110,14 @@ export class RegisterComponent {
 
     const userData = this.registerForm.value;
 
-    // const url =
-    //   this.selectedRole === 'candidate'
-    //     ? environment.apiUrl + '/addUser'
-    //     : environment.apiUrl + '/addEmployer';
     const url =
       this.selectedRole === 'candidate'
-        ? this.testapiUrl + '/UsersandEmployers/addUser'
-        : this.testapiUrl + '/UsersandEmployers/addEmployer';
+        ? environment.apiUrl + '/addUser'
+        : environment.apiUrl + '/addEmployer';
+    // const url =
+    //   this.selectedRole === 'candidate'
+    //     ? this.testapiUrl + '/UsersandEmployers/addUser'
+    //     : this.testapiUrl + '/UsersandEmployers/addEmployer';
 
     this.registerService.register(url, userData).subscribe({
       next: (res) => {

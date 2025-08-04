@@ -8,13 +8,11 @@ import { Observable } from 'rxjs';
 })
 export class JobService {
   constructor(private http: HttpClient) { }
-    private testapiUrl = 'http://localhost:5086/api';
-  // private testapiUrl = 'http://localhost:3000/api';
 
   addJob(data: any, token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     // return this.http.post(`${environment.apiUrl}/addJob`, data, { headers });
-    return this.http.post(`${this.testapiUrl}/Jobs`, data, { headers });
+    return this.http.post(`${environment.apiUrl}/Jobs`, data, { headers });
 
   }
 
@@ -27,7 +25,7 @@ export class JobService {
     //   { headers, params }
     // );
     return this.http.get<any>(
-      `${this.testapiUrl}/Jobs/summary/${employerId}`,
+      `${environment.apiUrl}/Jobs/summary/${employerId}`,
       { headers, params }
     );
   }
@@ -42,7 +40,7 @@ export class JobService {
     //   { headers }
     // );
     return this.http.get<{ job: any; applicants: any[] }>(
-      `${this.testapiUrl}/Jobs/${jobId}`,
+      `${environment.apiUrl}/Jobs/${jobId}`,
       { headers }
     );
   }
@@ -55,7 +53,7 @@ export class JobService {
     //   headers,
     //   params,
     // });
-    return this.http.get<any>(`${this.testapiUrl}/Jobs/employer/${employerId}`, {
+    return this.http.get<any>(`${environment.apiUrl}/Jobs/employer/${employerId}`, {
       headers,
       params,
     });
@@ -66,7 +64,7 @@ export class JobService {
     // return this.http.put(`${environment.apiUrl}/updateJob/${jobId}`, payload, {
     //   headers,
     // });
-    return this.http.put(`${this.testapiUrl}/Jobs/${jobId}`, payload, {
+    return this.http.put(`${environment.apiUrl}/Jobs/${jobId}`, payload, {
       headers,
     });
   }
@@ -76,14 +74,14 @@ export class JobService {
     // return this.http.delete(`${environment.apiUrl}/deleteJob/${jobId}`, {
     //   headers,
     // });
-    return this.http.delete(`${this.testapiUrl}/Jobs/${jobId}`, {
+    return this.http.delete(`${environment.apiUrl}/Jobs/${jobId}`, {
       headers,
     });
   }
 
   appliedJobs(userId: string, page: number = 1, limit: number = 5): Observable<any> {
    // return this.http.get(`${environment.apiUrl}/appliedJobs/${userId}?page=${page}&limit=${limit}`);
-    return this.http.get(`${this.testapiUrl}/Applications/user/${userId}?page=${page}&limit=${limit}`);
+    return this.http.get(`${environment.apiUrl}/Applications/user/${userId}?page=${page}&limit=${limit}`);
 
   }
 
@@ -99,7 +97,7 @@ export class JobService {
     // return this.http.get(`${environment.apiUrl}/searchJobs`, {
     //   params: httpParams,
     // });
-    return this.http.get(`${this.testapiUrl}/Jobs/searchJobs`, {
+    return this.http.get(`${environment.apiUrl}/Jobs/searchJobs`, {
       params: httpParams,
     });
   }

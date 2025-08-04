@@ -8,15 +8,13 @@ import { environment } from '../environments/environment';
 })
 export class ApplicationService {
   constructor(private http: HttpClient) {}
-  private testapiUrl = 'http://localhost:5086/api';
-  // private testapiUrl = 'http://localhost:3000/api';
 
   applyForJob(data: any, token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     // return this.http.post(`${environment.apiUrl}/applyForJob`, data, {
     //   headers,
     // });
-    return this.http.post(`${this.testapiUrl}/Applications/apply`, data, {
+    return this.http.post(`${environment.apiUrl}/Applications/apply`, data, {
       headers,
     });
   }
@@ -34,7 +32,7 @@ export class ApplicationService {
     //   { headers }
     // );
         return this.http.patch(
-      `${this.testapiUrl}/Applications/${applicationId}/status`,
+      `${environment.apiUrl}/Applications/${applicationId}/status`,
       body,
       { headers }
     );
@@ -48,7 +46,7 @@ export class ApplicationService {
     // );
 
     return this.http.delete(
-      `${this.testapiUrl}/Applications/revoke/${applicationId}`,
+      `${environment.apiUrl}/Applications/revoke/${applicationId}`,
       { headers }
     );
   }
