@@ -29,6 +29,8 @@ export class RegisterComponent {
   // Controls password visibility
   showPassword: boolean = false;
 
+  showConfirmPassword: boolean = false;
+
   // Variables for alert
   alertMessage: string = '';
   alertType: 'success' | 'error' | 'info' = 'info';
@@ -92,6 +94,10 @@ export class RegisterComponent {
   // Toggle password visibility
   togglePassword() {
     this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   goToLogin() {
